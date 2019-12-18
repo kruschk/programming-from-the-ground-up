@@ -1,0 +1,4 @@
+What error results can be returned by each of these system calls?
+	- Each one can return a metric fucktonne of errors. See read(2),
+	  write(2), open(2), close(2), and exit(2) in the man pages for a
+	  listing.

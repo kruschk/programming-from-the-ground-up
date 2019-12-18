@@ -1,0 +1,10 @@
+psize
+psize.c
+psize.c~
+test.txt
+toupper
+toupper2.s
+toupper2.s~
+toupper.o
+toupper.s
+toupper.s~

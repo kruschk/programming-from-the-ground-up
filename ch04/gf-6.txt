@@ -1,0 +1,5 @@
+What test cases should we use in our example program to check to see if it is working properly?
+	- Typical cases (obviously).
+	- Edge cases (e.g. for the factorial function, we should try inputting 0, 1, and 2 to make sure it handles this properly (my iterative version will definitely fail on 0).
+	- Invalid input, such as letters to a maximum-finder.
+	- A tough program will be able to handle random input elegantly (not necessarily GIGO (garbage-in-garbage-out)!

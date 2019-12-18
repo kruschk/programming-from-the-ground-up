@@ -1,0 +1,69 @@
+1. What does if mean if a line in the program starts with the ’#’ character?
+	- A # character indicates a comment in AT&T assembly style.
+
+2. What is the difference between an assembly language file and an object code file?
+	- Assembly language is a human-readable form of the instructions that a computer understands.
+	- An object file is code that is in the machine's language, but has not been put completely together.
+	- Assembly language is transformed into object code by the assembler.
+
+3. What does the linker do?
+	- The linker puts the object file(s) together, and adds some additional information so that the kernel (such as Linux) knows how to load and run it.
+
+4. How do you check the result status code of the last program you ran?
+	- The command `echo $?` will display the exit status of the last program that was run.
+	- The exit status will be changed by any commands used in between running the program and issuing the `echo $?` command!
+
+5. What is the difference between movl $1, %eax and movl 1, %eax ?
+	- The former moves the immediate value 1 into the eax register.
+	- The latter moves the memory address 1 into the eax register.
+
+6. Which register holds the system call number?
+	- %eax for system calls
+	- %ebx for return status.
+
+7. What are indexes used for?
+	- They are most commonly used for accessing the various values in an array.
+
+8. Why do indexes usually start at 0?
+	- Because the address that points to the item of interest in memory points to the first (well, zeroth), item in the array. So it can be framed as having an offset of 0.
+
+9. If I issued the command movl data_items(,%edi,4), %eax and data_items was address 3634 and %edi held the value 13, what address would you be using to move into %eax?
+	- 3634 + 4*13 = 3686
+
+10. List the general-purpose registers.
+	- %eax
+	- %ebx
+	- %ecx
+	- %edx
+	- %edi
+	- %esi
+
+11. What is the difference between movl and movb ?
+	- movl - moves data a word at a time (l = long?)
+	- movb - moves data a byte at a time
+
+12. What is flow control?
+	- Instructions which tell the computer which execution path to take.
+		- The computer may execute different instructions based on the input.
+	- The flow of execution can branch to different instructions based on flow control.
+	- Can also be used to perform loops.
+
+13. What does a conditional jump do?
+	- Jumps to another point in the code based on the result of some comparison.
+
+14. What things do you have to plan for when writing a program?
+	- Where will the original list of numbers be stored?
+	- What procedure will we need to follow to find the maximum number?
+	- How much storage do we need to carry out that procedure?
+	- Will all of the storage fit into registers, or do we need to use some memory as well?
+
+15. Go through every instruction and list what addressing mode is being used for each operand.
+	25: immediate, register
+	26: index, register
+	27: register, register
+
+	31: immediate, register
+	34: index, register
+	38: register, register
+
+	44: immediate, register

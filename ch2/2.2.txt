@@ -1,0 +1,21 @@
+1. What data would you use in an employee record? How would you lay it out in memory?
+	- First name pointer (1 word - 4 bytes)
+	- Last name pointer (1 word - 4 bytes)
+	- SIN (2 words - 8 bytes)
+	- Identification number (1 word - 4 bytes)
+	- Hourly wage (1 word - 4 bytes)
+	- Start date (1 word - 4 bytes)
+	- End date (1 word - 4 bytes)
+	- Status (active or not - 1 byte)
+	- Comments pointer (1 word - 4 bytes)
+
+2. If I had the pointer to the beginning of the employee record above, and wanted to access a particular piece of data inside of it, what addressing mode would I use?
+	- Base pointer addressing would probably be the most straightforward.
+3. In base pointer addressing mode, if you have a register holding the value 3122, and an offset of 20, what address would you be trying to access?
+	- 3122+20=3142
+4. In indexed addressing mode, if the base address is 6512, the index register has a 5, and the multiplier is 4, what address would you be trying to access?
+	- 6512+4*5=6532
+5. In indexed addressing mode, if the base address is 123472, the index register has a 0, and the multiplier is 4, what address would you be trying to access?
+	- 123472+4*0=123472
+6. In indexed addressing mode, if the base address is 9123478, the index register has a 20, and the multiplier is 1, what address would you be trying to access?
+	- 9123478+1*20=9123498

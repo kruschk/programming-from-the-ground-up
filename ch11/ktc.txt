@@ -1,0 +1,30 @@
+What is the difference between an intepretted language and a compiled
+language?
+	- An interpreted language is translated from source code at run time
+	  by another program, called the interpreter (e.g. perl or python).
+		- This means that the interpreter must do the work of
+		  translating the source code into machine code every time the
+		  program is run. This is primarily what causes performance
+		  losses when compared to compiled languages.
+		- Interpreted languages are usually much faster to develop
+		  with.
+	- A compiled language is one that is translated from source code to
+	  machine code before being run. The machine-code file, (often called a
+	  binary file) can be run directly on any compatible
+	  architecture/OS, without any need for an external interpreter
+	  program.
+		- Compiled languages usually exhibit better performance
+		- The build process can take a very long time for large
+		  programs, which is a downside for developers.
+		- The programs that compile source code are called, fittingly,
+		  compilers.
+	- There are tonnes of interesting differences between interpreted and
+	  compiled languages, more than can be reasonably discussed here.
+
+What reasons might cause you to need to learn a new programming language?
+	- Different languages handle different problems better than others.
+	  For example, Perl excels at text processing, Python is brilliant for
+	  rapid development, and C is good for interfacing with other languages
+	  and tweaking for performance. A good programmer will recognize which
+	  language in their toolbox is the best tool for the job, because none
+	  of them are the best at everything!

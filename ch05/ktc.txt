@@ -1,0 +1,41 @@
+1. Describe the lifecycle of a file descriptor.
+	- You start by opening the file by name using a Linux system call
+	  (birth (not an official/common term)).
+	- The Linux kernel then returns a number, called a file descriptor, to
+	  you.
+	- You use the filed descriptor to refer to the file for any read or
+	  write operations.
+	- When you are done reading and writing, you close the file, which
+	  gets rid of the file descriptor (death (not an official/common term)).
+
+2. What are the standard file descriptors and what are they used for?
+	- 0, 1, and 2 are the STDIO file descriptors.
+	- 0 is STDIN, which is usually connected to the keyboard (all hail the
+	  keyboard). It is a read-only file.
+	- 1 is STDOUT, which is usually connected to the screen (good thing,
+	  if you wanna know what it is you're doing). It is a write-only file.
+	- 2 is STDERR, which is also connected to the screen by default. It
+	  can easily be piped into a log file for a nice error log (being able
+	  to pipe it elsewhere without STDOUT attached is why it's separate from
+	  STDOUT). It is a write-only file.
+
+3. What is a buffer?
+	- It is a continuous block of bytes used for bulk data transfer or
+	  processing.
+	- Buffers are usually only used to store data temporarily.
+	- Buffers are usually a fixed size, set by the programmer.
+
+4. What is the difference between the .data section and the .bss section?
+	- The .bss section reserves storage, but does not initialize it.
+	- The .data section reserves and initializes storage.
+	- The .bss section does not take up space in the executable (therefore
+	  reducing file size).
+	- The .bss section is useful for buffers because we don't need to
+	  initialize buffers, just reserve storage for them.
+
+5. What are the system calls related to reading and writing files?
+	- open() - load 5 into %rax
+	- read() - load 3 into %rax
+	- write() - load 4 into %rax
+	- close() - load 6 into %rax
+	- bonus: exit() - load 1 into %rax

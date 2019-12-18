@@ -1,0 +1,14 @@
+1. What are the minimum number of addressing modes needed for computation?
+	- register indirect addressing is the only mode that is strictly required.
+	- it will allow you to calculate any address you want in a register, and use it to do the access.
+
+2. Why include addressing modes that aren’t strictly needed?
+	- They are convenient!
+	- They save registers.
+	- https://stackoverflow.com/questions/35221379/what-is-the-minimum-number-of-addressing-modes-necessary-for-computation
+
+3. Research and then describe how pipelining (or one of the other complicating factors) affects the fetch-execute cycle.
+	- https://en.wikipedia.org/wiki/Instruction_pipeline
+
+4. Research and then describe the tradeoffs between fixed-length instructions and variable-length instructions.
+	- https://stackoverflow.com/questions/21481427/what-is-the-advantage-of-having-instructions-in-a-uniform-format

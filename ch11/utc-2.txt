@@ -1,0 +1,18 @@
+#include <stdio.h>
+/* In this line, the C preprocessor replaces the #include statement with the
+entire stdio.h header file. This allows us to use the functions defined there.
+
+int main(int argc, char **argv) {
+	const unsigned int data_items[] = {3,67,34,222,45,75,54,34,44,33,22,11,6};
+
+	int largest = data_items[0];
+	for (size_t i = 1; i < (sizeof data_items)/(sizeof(data_items[i])); i++) {
+		int current = data_items[i];
+		printf("current: %d\n", current);
+		if (current > largest) {
+			largest = current;
+		}
+	}
+	printf("largest: %d\n", largest);
+	return largest;
+}

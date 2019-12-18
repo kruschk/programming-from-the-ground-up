@@ -1,0 +1,60 @@
+1. Describe the fetch-execute cycle.
+	- The CPU reads in instructions from memory one at a time (fetch) and executes (execute) them. This is known as the fetch-execute cycle.
+
+	1. Program counter
+		- Tells the computer where to fetch the next instruction from.
+		- Holds the memory address of the next instruction to be executed.
+		- The CPU looks at the program counter, and fetches whatever number is stored in memory at the location specified. This number is then passed on to the instruction decoder.
+	
+	2. Instruction decoder
+		- determines what the fetched instruction means
+			- what process needs to take place
+			- what memory locations are going to be involved
+		- computer instructions usually consist of the actual instruction and a list of memory locations used to carry it out
+	
+	3. Data bus
+		- used to fetch the memory locations to be used in the calculation.
+		- this is the physical connection between the CPU and memory.
+		- the wires that go out from memory are the data bus
+	
+	4. Registers
+		- there are general-purpose and special-purpose registers
+		- general-purpose are where addition, subtraction, multiplication, comparisons, and other operations are usually done.
+		- registers are limited in number
+		- most information is stored in main memory, brought in to the registers for processing, and then put back into memory when the processing is completed.
+		- special-purpose registers have very specific purposes.
+	
+	5. Arithmetic and logic unit
+		- CPU passes the data and decoded instruction to the arithmetic and logic unit for further processing.
+		- this is where the instruction is actually executed.
+		- Results are the placed on the data bus and sent to the appropriate location in memory or into a register, as specified by the instruction.
+
+2. What is a register? How would computation be more difficult without registers?
+	- a register is a high-speed storage location for numbers
+	- information is usually loaded from memory into a register before performing calculations
+
+3. How do you represent numbers larger than 255?
+	- simply use more bytes to represent them
+	- 255 can be represented with a byte (8 bits)
+	- on the x86 processors, a word is 4 bytes ("a word is the natural unit of data used by a particular processor design", so it is processor-specific).
+	- 4 bits = nibble
+
+4. How big are the registers on the machines we will be using?
+	- the general-purpose registers have a word size of 4 bytes, or 32-bits.
+
+5. How does a computer know how to interpret a given byte or set of bytes of memory?
+	- it doesn't, from the computer's point of view, all instructions and data are just long strings of numbers
+	- it is up to a particular program to interpret the data, e.g. ASCII encodes characters to numbers that the computer can process
+	- the instruction (pointed to by the instruction pointer/program counter) is what tells the computer what operations to perform on the numerical data
+	- https://stackoverflow.com/questions/19542367/how-does-the-control-unit-in-von-neuman-model-distinguish-between-data-and-instr?rq=1
+
+6. What are the addressing modes and what are they used for?
+	-immediate mode
+	-register addressing mode
+	-direct addressing mode
+	-indexed addressing mode
+	-indirect addressing mode
+	-base pointer addressing mode 
+
+7. What does the instruction pointer do?
+	- The only way the computer knows that a memory location is an instruction is that a special-purpose register called the instruction pointer points to them at one point or another. If the instruction pointer points to a memory word, it is loaded as an instruction. Other than that, the computer has no way of knowing the difference between programs and other types of data.

@@ -1,0 +1,53 @@
+At what level of importance is optimization compared to the other priorities
+in programming?
+	- Fairly low. Optimization should usually be ignored until your program
+	  meets the following criteria:
+		- correctness
+		- robustness
+		- documentation (and everything should work as documented!)
+		- safety
+		- modularity
+		- maintainability
+	- Minor speed problems can usually be solved through hardware, which
+	  is usually much cheaper than a programmer's time.
+	- New projects often have a first code base that is more or less
+	  completely rewritten in future revisions. Any optimizations in the
+	  early code will therefore be wasted.
+
+What is the difference between local and global optimizations?
+	- Local optimization:
+		- hardware-specific, e.g. the fastest way to perform a given
+		  computation on a given machine
+		- program-specific, e.g. making a specific piece of code
+		  perform the best for the most often-occurring case
+	- Global optimization:
+		- consist of optimizations which are structural
+		- often involves restructuring code to avoid performance
+		  problems altogether, rather than trying to find the best way
+		  through them
+
+Name some types of local optimizations.
+	- local optimization:
+		- precomputing calculations
+		- remembering calculation results
+		- locality of reference
+		- register usage
+		- inline functions
+		- optimized instructions
+		- addressing modes
+		- data alignment
+	- global optimizations:
+		- parallelization
+		- statelessness
+
+How do you determine what parts of your program need optimization?
+	- Usually by using a profiler, such as gprof. This program tells you
+	  which functions your program spends most of its time in, so you know
+	  where to spend your time on optimization.
+
+At what level of importance is optimization compared to the other priorities
+in programming? Why do you think I repeated that question?
+	- Low!
+	- I guess because you really want us to say it's a low-priority task,
+	  at least until you have a working program that meets the criteria
+	  listed above.

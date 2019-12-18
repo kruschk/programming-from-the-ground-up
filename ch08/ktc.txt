@@ -1,0 +1,64 @@
+What are the advantages and disadvantages of shared libraries?
+	- Pros:
+		- Allow for more modular code.
+		- Reduce the amount of repeated code in the source files.
+		- Allow for another layer of abstraction between programmer
+		  and hardware (this can be a con, too).
+		- If a bug is found in a library function, it only needs to be
+		  fixed in the library, and the programs that use it will be
+		  fixed along with the upgrade.
+	- Cons:
+		- Can contribute to "dependency hell", which is when a program
+		  relies on a whole bunch of libraries, which may rely on
+		  additional libraries, and so on.
+		- Further, if a library removes a feature and a program relies
+		  on that feature, the program will be break.
+
+Given a library named ’foo’, what would the library’s filename be?
+	- Assuming ELF executables, the libraries filename would be libfoo.so.
+	  For a.outs, it would be libfoo.a.
+
+What does the ldd command do?
+	- It prints shared object dependencies.
+	- This means that it can tell you which dynamic linker and which
+	  libraries a program relies on.
+
+Let’s say we had the files foo.o and bar.o, and you wanted to link them
+together, and dynamically link them to the library ’kramer’. What would the
+linking command be to generate the final executable?
+	- ld foo.o bar.o -I /lib64/ld-linux-x86-64.so.2 -l kramer
+
+What is typedef for?
+	- In C, the typedef keyword allows the programmer to define their own
+	  types. For example, an unsigned long int can be defined as size_t
+	  to be used as a "size type". These type definitions always break
+	  down into C's basic types, such as int, char, etc. at some point.
+	- Useful for giving types more meaningful/descriptive names.
+	- Simply put, it allows you to rename a type.
+
+What are structs for?
+	- A set of data items that have been put together under a name, e.g.:
+		struct teststruct {
+			int a;
+			char *b;
+		};
+	  creates a structure named teststruct which contains an int followed
+	  by a char *.
+
+What is the difference between a data element of type int and int *? How
+would you access them differently in your program?
+	- An int is an integer (just a number), while an int * is a pointer to
+	  an int, which means it is an address that points to an int.
+	- for int, use e.g. pushq variable (direct addressing mode)
+	- for int *, use e.g. pushq $variable (immediate addressing mode)
+
+If you had an object file called foo.o, what would be the command to create a
+shared library called ’bar’?
+	- ld -shared -o libbar.so foo.o
+	- to use this library ("link against it"), we would do the following:
+		- ld -L . -I /lib64/ld-linux-x86-64.so.2 -o spamandeggs -l bar
+
+What is the purpose of LD_LIBRARY_PATH?
+	- This environment variable tells the linker where to look for dynamic
+	  libraries, alongside the standard /lib, /usr/lib, and directories
+	  listed in /etc/ld.so.conf.

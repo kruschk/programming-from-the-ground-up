@@ -1,0 +1,150 @@
+Convert the decimal number 5,294 to binary.
+	- The calculations are as follows:
+		5294 / 2 = 2647 R0
+		2647 / 2 = 1323 R1
+		1323 / 2 =  661 R1
+		 661 / 2 =  330 R1
+		 330 / 2 =  165 R0
+		 165 / 2 =   82 R1
+		  82 / 2 =   41 R0
+		  41 / 2 =   20 R1
+		  20 / 2 =   10 R0
+		  10 / 2 =    5 R0
+		   5 / 2 =    2 R1
+		   2 / 2 =    1 R0
+		   1 / 2 =    0 R1
+	- We see that 5,294 in base 10 is equivalent to 0001 0100 1010 1110 in
+	  binary (MSB is at the bottom, zeros have been added for padding).
+
+What number does 0x0234aeff represent? Specify in binary, octal, and decimal.
+	- To decimal:
+		= ( 0234aeff )_16
+		= 0*16^7 + 2*16^6 + 3*16^5 + 4*16^4 + a*16^3 + e*16^2 + f*16^1
+		       + f*16^0
+		= 0*16^7 + 2*16^6 + 3*16^5 + 4*16^4 + 10*16^3 + 14*16^2 + 15*16^1
+		       + 15*16^0
+		= ( 37,007,103 )_10
+	- To binary:
+		= (    0    2    3    4    a    e    f    f )_16
+		= ( 0000 0010 0011 0100 1010 1110 1111 1111 )_2
+	- To octal:
+		= ( 000 000 010 001 101 001 010 111 011 111 111 )_2
+		= (   0   0   2   1   5   1   2   6   3   7   7 )_8
+
+Add the binary numbers 10111001 and 101011.
+	10111001
+	+ 101011
+	--------
+	11100100
+
+Multiply the binary numbers 1100 1010110.
+	    1010110
+	    x  1100
+	    -------
+	    0000000
+	   0000000
+	  1010110
+	+1010110
+	-----------
+	10000001000
+
+Convert the results of the previous two problems into decimal.
+	- Addition result:
+		= 1*2^7 + 1*2^6 + 1*2^5 + 0*2^4 + 0*2^3 + 1*2^2 + 0*2^1 + 0*2^0
+		= 228
+	- Multiplication result:
+		= 1*2^10 + 0*2^9 + 0*2^8 + 0*2^7 + 0*2^6 + 0*2^5 + 0*2^4 + 1*2^3 + 0*2^2 + 0*2^1 + 0*2^0
+		= 1032
+
+Describe how AND, OR, NOT, and XOR work.
+	- AND returns true only if both inputs are true:
+		& 0 1
+		------
+		0 0 0
+		1 0 1
+	- OR returns true if either or both inputs are true:
+		| 0 1
+		-----
+		0 0 0
+		1 0 1
+	- NOT returns true if the input is false or false if the input is
+	  true:
+		~ 0 1
+		-----
+		  1 0
+	- XOR returns true if either one input or the other is true, but not
+	  both:
+		^ 0 1
+		-----
+		0 0 1
+		1 1 0
+
+What is masking for?
+	- Masking is for eliminating everything we don't want.
+	- It is accomplished by doing an and with a number that has the bits
+	  we are interested set to 1.
+	- e.g. to determine if the second bit is set in the number 1010:
+		1010 >> 1 = 0101
+
+		  0101
+		& 0001
+		------
+		  0001
+
+		The result here can be compared to 1 to determine if the
+		second bit was set to 1 or 0.
+	- In assembly, this could be done like so:
+		movq	$0b0101, %rax	# move 0b0101 into %rax
+		shrq	$1, %rax	# shift the register one to the right
+		andq	$0b0001, %rax	# mask with 0b0001
+		cmpq	$0b0001, %rax	# compare with 1 to see if that bit
+					# was set
+		je	second_bit_was_true	# jump to this label if it was
+		jmp	second_bit_was_false	# jump to this one if it wasn't
+
+What number would you use for the flags of the open system call if you wanted
+to open the file for writing, and create the file if it doesn’t exist?
+	- The flags to use are O_WRONLY | O_CREAT
+		  0000 0001
+		| 0100 0000
+		-----------
+		  0100 0001
+
+		= 65 = 0101 = 0x41
+
+How would you represent -55 in a thirty-two bit register?
+	- Simply take 55, complement it, and add 1:
+		55 / 2 = 27 R1
+		27 / 2 = 13 R1
+		13 / 2 =  6 R1
+		 6 / 2 =  3 R0
+		 3 / 2 =  1 R1
+		 1 / 2 =  0 R1
+
+		~0000 0000 0000 0000 0000 0000 0011 0111 = 1111 1111 1111 1111 1111 1111 1100 1000
+
+		  1111 1111 1111 1111 1111 1111 1100 1000
+		+ 0000 0000 0000 0000 0000 0000 0000 0001
+		  ---------------------------------------
+		  1111 1111 1111 1111 1111 1111 1100 1001
+
+Sign-extend the previous quantity into a 64-bit register.
+	1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1111 1100 1001
+
+Describe the difference between little-endian and big-endian storage of words
+in memory.
+	- Big-endian is the intuitive approach: it stores words in memory with
+	  the most significant byte  on the left and the least significant
+	  byte on the right, just like we are used to seeing. For example, the
+	  4-byte word 0x0234aeff (assuming 8-bit bytes) would be stored as
+	  follows (remember 2 hex numbers make an 8-bit byte):
+		address/index:	 0  1  2  3
+		value:		02 34 ae ff
+	- Little-endian is very unintuitive, but it is more convenient from a
+	  hardware perspective, and it has different performance
+	  characteristics. It simple reverses the order of the bytes, so that
+	  the 4-byte word above would be stored in memory as:
+		address/index:	 0  1  2  3
+		value:		ff ae 34 02
+	  Note that it's note the individual _bits_ that are stored in reverse
+	  order, it's the _bytes_!

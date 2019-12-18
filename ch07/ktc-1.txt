@@ -1,0 +1,76 @@
+What are the reasons programmer’s have trouble with scheduling?
+	- Programmers don’t always schedule time for meetings or other
+	  non-coding activities that make up every day.
+	- Programmers often underestimate feedback times (how long it takes to
+	  pass change requests and approvals back and forth) for projects.
+	- Programmers don’t always understand the full scope of what they are
+	  producing.
+	- Programmers often have to estimate a schedule on a totally different
+	  kind of project than they are used to, and thus are unable to
+	  schedule accurately.
+	- Programmers often underestimate the amount of time it takes to get a
+	  program fully robust.
+
+Find your favorite program, and try to use it in a completely wrong manner.
+Open up files of the wrong type, choose invalid options, close windows that
+are supposed to be open, etc. Count how many different error scenarios they had
+to account for.
+	- 
+
+What are corner cases? Can you list examples of numeric corner cases?
+	- Corner cases are the atypical (but still valid) inputs that are most
+	  likely to cause problems or behave unexpectedly.
+	- The following values should always be tested when processing numeric
+	  data:
+		- 0
+		- 1
+		- A number within the expected range
+		- A number outside the expected range
+		- The first number in the expected range
+		- The last number in the expected range
+		- The first number below the expected range
+		- The first number above the expected range
+		- Numbers on either side of the range
+	- For example (for numeric data), if you are testing a function that
+	  accepts integers in the range [6, 9230), you might test:
+		- 0
+		- 1
+		- 4346
+		- 3 and/or 15934
+		- 6
+		- 9229
+		- 5
+		- 9230
+		- 5 and 7, 9228 and 9230
+
+Why is user testing so important?
+	- Users will be the ones who actually use the program, and they think
+	  very differently from you, especially since they:
+		- Are not you, so they think differently
+		- Do not understand the program as intimately as you do, and
+		  therefore do not know how to use it correctly/will try
+		  different test cases that you may never think of due to your
+		  knowledge of the program.
+	- User testing is one of the best ways to make a robust program,
+	  because it needs to handle actual users in the development phase.
+
+What are stubs and drivers used for? What’s the difference between the two?
+	- A driver is a used to test a function. They simply load a function,
+	  supply it with data, and check the results.
+	- A stub simply returns a/the values that a function needs to proceed,
+	  and is used until the function that the stub represents is developed
+	  properly. It is essentially a placeholder.
+
+What are recovery points used for?
+	- A program can be split up into a number of units (such as opening a
+	  file, reading it, decoding it, etc.).
+	- Recovery points are program logic that is used to recover from a
+	  particular unit, e.g. failing to open a file.
+	- It is easier to handle errors when it is associated with a
+	  particular unit of code, such as (again) opening the file.
+
+How many different error codes should a program have?
+	- Ideally, a program should have a unique error code for every possible
+	  contingency. This means a number for each error that is encountered.
+	- Using just the error code, you would be able to find the location in
+	  the program where the error was signalled.

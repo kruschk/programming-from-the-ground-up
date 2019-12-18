@@ -1,0 +1,14 @@
+What difference does the size of the buffer make?
+	- System calls incur a lot of overhead, so we want to make as few as
+	  possible in our programs.
+		- e.g. reading from/writing to disk is a VERY slow process
+	- Buffers allow us to make much fewer system calls by storing the data
+	  temporarily. Having the data at our fingertips (in RAM) is MUCH
+	  faster than repeated syscalls.
+		- For example, we make a read() system call and read it into a
+		  buffer, if the buffer is large enough, no more system calls
+		  are needed.
+	- In general, we want to make our buffers large enough that we don't
+	  need to make repeated system calls, but not so large that they take
+	  up space in memory for no reason.
+	

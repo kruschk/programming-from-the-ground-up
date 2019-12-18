@@ -1,0 +1,58 @@
+What is a record?
+	- A record is data that stores facts about a particular object, say, a
+	  person, place, or thing. For example, a person's name, SIN, and
+	  income could be stored in a record associated with that person.
+	- Records are generally persistent; they are written to a mass storage
+	  device such as a hard drive so that they don't disappear when the
+	  computer shuts down.
+	- Records can be structured or unstructed, computers are apt at
+	  handling the former type of record, but not so good with the latter.
+	  Computers are, in general, good at handling any structured data.
+	- This book uses the convention of fields and records, where a field
+	  can be imagined as a column of data and the record as an individual
+	  entry in a field.
+	- The easiest records to handle are fixed-length records.
+
+What is the advantage of fixed-length records over variable-length records?
+	- Fixed length records are structured data, whereas variable-length
+	  records are unstructured. Unstructured data is, in general, much
+	  more difficult to handle.
+
+How do you include constants in multiple assembly source files?
+	- One way is to define them in another file (say, const.s), and then
+	  include them in the desired source file(s).
+		- const.s:
+			.equ APPLE, 0
+			.equ BANANA, 1
+		- source.s
+			.include "const.s"
+
+Why might you want to split up a project into multiple source files?
+	- There are several reasons to use multiple source files (a modular
+	  approach to development):
+		- Multiple programmers can work on the same program at the
+		  same time without interfering with each other's work.
+		- It breaks down a large program into smaller, more manageable
+		  chunks.
+		- Usually, the individual source files can be assembled or
+		  compiled separately. For large programs with long build
+		  times, this can be a significant benefit.
+
+What does the instruction incl record_buffer + RECORD_AGE do? What addressing
+mode is it using? How many operands does the incl instructions have in this
+case? Which parts are being handled by the assembler and which parts are being
+handled when the program is run?
+	- The instruction increments the age (RECORD_AGE) field of a
+	  particular record that has been stored in the temporary record_buffer
+	  buffer.
+	- It simply accesses the memory location defined by the number
+	  record_buffer + RECORD_AGE. Since it uses an address
+	  (ADDRESS + OFFSET), this is an example of direct addressing mode.
+	- The incl instruction only has one operand: the address of the age
+	  record stored in the buffer. The instruction will dereference this
+	  address and increment the value stored there.
+	- The assembler computes the value of record_buffer (some address) +
+	  RECORD_AGE (which has the value 320, based on the record-def.s).
+	  After assembling, the increment instruction only sees a number.
+	- The only thing that the cpu sees at runtime is the instruction
+	  (incl) and the memory address (record_buffer + RECORD_AGE).

@@ -1,0 +1,48 @@
+What are primitives?
+	- Primitives are functions that cannot be written by the programmer, and must therefore be provided by the system. For example, at some point, a GUI library must call on the operating system to do simple line or point drawing on the screen.
+	- Primitives cannot be broken down into any smaller pieces.
+	- Programming can be seen as breaking a large program down into primitives, or building up from a set of primitives until you end up with a large program.
+	- In assembly, the primitives are usually the same thing as the system calls.
+
+What are calling conventions?
+	- A calling convention is the way that variables are stored and parameters and return values are transferred by the computer.
+	- A calling convention describes how functions expect to get and receive data when they are called.
+	- Most calling conventions include:
+		- a function name
+		- function parameters
+		- local variables
+		- static variables
+		- global variables
+		- the return address
+
+What is the stack?
+	- The stack is a region in memory (which begins at the end of a program's allocated memory) which stores values when pushq is used and gives them back when popq is used.
+	- It is very important to allow functions to work.
+	- The pop instruction will only access the item at the top of the stack!
+	- The push instruction will only push another item to the top of the stack!
+
+How do pushl and popl affect the stack? What special-purpose register do they affect?
+	- The stack grows (downward from the end of memory) as more values are pushed to it.
+	- The stack shrinks (upward toward the end of memory) as more values are popped from it.
+	- The %esp register always contains a pointer (an address) to the top of the stack!
+
+What are local variables and what are they used for?
+	- They are data storage that a function uses while it works and that are thrown away when it returns.
+	- Local variables are not accessible to any other function within a program.
+	- They are used like a scratch pad of paper, so that the function can do it's job and return.
+
+Why are local variables so necessary in recursive functions?
+	- Global variables only provide one copy of a variable.
+	- Local variables exist on the stack frame, and each function call gets its own stack frame. This way, when a function is called recursively, it gets its own version of the local variable (which may have a different value!), which allows the function to do something different based on the different input parameter!
+
+What are %ebp and %esp used for?
+	- %ebp is the base pointer, which stores the address that comes just after the return address on the stack. In the C calling convention, the value stored in memory here (at the memory address that %ebp points to) is the previous %ebp address.
+		- This makes it easy to access function parameters and local variables.
+		- %ebp is a more or less constant reference to the stack frame.
+	- %esp is the stack pointer, which always points to the top of the stack. 
+		- This makes accessing the value at the top of the stack easier, or from some offset of the stack.
+		- Also involved in the implementation of push and pop (I think).
+
+What is a stack frame?
+	- The stack frame consists of all of the stack variables used within a function, including parameters, local variables, and the return address.
+	- It's essentially the function's playground.

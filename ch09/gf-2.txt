@@ -1,0 +1,6 @@
+Research reference counting. What advantages and disadvantages does this have
+over the style of memory management used here?
+	- Again, Wikipedia has a good article on it:
+		- https://en.wikipedia.org/wiki/Reference_counting
+	- It's also mentioned in the article on garbage collection:
+		- https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)

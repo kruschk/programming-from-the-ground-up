@@ -1,0 +1,10 @@
+Explain the problems that would arise without a standard calling convention.
+	- The calling convention determines the precise state that the stack
+	  will be in when a function is called. This is very important so that
+	  the program knows where function parameters are, where the base
+	  pointer_was_, where the return address is, and where local variables
+	  are on the stack.
+	- Without a calling convention, the function may, e.g. access the base
+	  pointer thinking that it's a local variable, or a function parameter
+	  thinking that it's a return address. Obviously, this will cause many
+	  issues.

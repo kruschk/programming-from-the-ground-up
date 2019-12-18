@@ -1,0 +1,145 @@
+Describe the layout of memory when a Linux program starts.
+	- Note that some of this may be x86-specific, and no longer apply to
+	  amd64.
+	- When the program is loaded, each .section is loaded into its own
+	  region of memory. All .data, .bss, and .text sections are put
+	  together to form three large chunks.
+	- The instructions (.text) are loaded at address 0x08048000. The .data
+	  section is loaded immediately after that, followed by .bss.
+	- The stack starts at the end of addressable memory (address
+	  0xbfffffff on x86) and grows downward from there. It looks like
+	  this (from highest address to lowest):
+		- At the bottom of the stack (the top address of memory), there
+		  is a word of memory that is zero.
+		- Immediately following are the program's environment
+		  variables.
+		- Then come the command-line arguments (in decreasing order;
+		  N, N-1, N-2, ... 3, 2, 1).
+		- Then comes the name of the program using ASCII characters
+		  (null-terminated) (this is argv[0] in C).
+		- The argument count (argc in C) comes next. %rsp points here
+		  when the program begins.
+		- Below this is unmapped memory (break area and unmapped
+		  memory are essentially synonymous here, I believe), where
+		  the stack can grow to with pushes and which can be allocated
+		  using an allocator (the memory that an allocator manages is
+		  called the heap).
+		- At the very bottom addresses of memory come the .bss, .data,
+		  and .text sections, in that order.
+			- .bss
+			- .data
+			- .text
+
+What is the heap?
+	- The heap is the pool of memory dynamically allocated by a memory
+	  manager.
+	- Memory allocators include at least two basic functions: allocate and
+	  deallocate. Allocate allocates a block of memory in the heap for
+	  program usage and deallocate frees it, which simply makes it
+	  available for re-allocation.
+	- It is the portion of memory where dynamically-allocated memory
+	  resides.
+	- https://stackoverflow.com/questions/2308751/what-is-a-memory-heap
+	- I think this means that any memory between the .bss section and the
+	  system break will be considered the heap.
+		- This implies that the heap grows upward (up as in increasing
+		  addresses).
+
+What is the current break?
+	- The break is the last memory address accessible to your program
+	  (also called system break or current break).
+	- That means, according to our program memory layout outlined above,
+	  that the break is at the very last address in the .bss section.
+	- "If you need more memory, you can just tell Linux where you want the
+	  new break point to be, and Linux will map all the memory you need
+	  between the current and new break point, and then move the break
+	  point to the spot you specify. That memory is now available for your
+	  program to use."
+
+Which direction does the stack grow in?
+	- It grows from the highest memory address accessible to the program
+	  (0xbfffffff on x86) downward. So the "top" of the stack is actually
+	  the lowest memory address.
+
+Which direction does the heap grow in?
+	- The break line moves with each call to sys_brk.
+	- I think this means that any memory between the .bss section and the
+	  system break will be considered the heap.
+		- This implies that the heap grows upward (up as in increasing
+		  addresses).
+
+What happens when you access unmapped memory?
+	- This will result in a segmentation fault, A.K.A. SIGSEGV.
+
+How does the operating system prevent processes from writing over each others'
+memory?
+	- It uses virtual memory instead of physical memory.
+	- Virtual memory is the way a program thinks about memory.
+	- Before loading a program, Linux finds an empty physical memory space
+	  large enough to fit the program, and then tells the processor to
+	  pretend this is address 0x0804800 (start) to load your program into.
+	- The process of assigning virtual addresses to physical addresses is
+	  called mapping.
+	- Note that not only can Linux have a virtual address map to a
+	  different physical address, it can also move those mappings around
+	  as needed.
+
+Describe the process that occurs if a piece of memory you are using is
+currently residing on disk?
+	- This is an explanation of swapping, not a normal disk access:
+	- x86 processors cannot run instructions directly from disk, nor can
+	  they access data directly from disk. When you try to access memory
+	  that is mapped to the disk, the processor notices that it can't
+	  service your memory request directly. It then asks Linux to step in.
+	  Linux notices that the memory is actually on disk. It moves some data
+	  currently in memory onto disk to make room, and then moves the memory
+	  being accessed from the disk back into physical memory. It then
+	  updates the processor's virtual-to-physical lookup tables so it can
+	  find the memory in the new location. Linux then returns control to
+	  the program and restarts it at the instruction which was trying to
+	  access the data in the first place. This instruction can now be
+	  completed successfully, since the memory is now in physical RAM.
+	- This is a painfully slow process because:
+		- Disk access is _very_ slow compared to register or RAM
+		  access.
+		- It adds a lot of overhead from the system call (context
+		  switch, lots of instructions to perform the procedure
+		  described above, etc.).
+
+Why do you need an allocator?
+	- The problem with using the Linux sys_brk call is that it is
+	  difficult to keep track of the memory we request.
+	- If you need more memory, you can just tell Linux where you want the
+	  new break point to be, and Linux will map all the memory you need
+	  between the current and new break point, and then move the break
+	  point to the spot you specify. That memory is now available for your
+	  program to use. The way we tell Linux to move the break point is
+	  through the brk system call. The brk system call is call number 45
+	  (which will be in %eax ). %ebx should be loaded with the requested
+	  breakpoint. Then you call int $0x80 to signal Linux to do its work.
+	  After mapping in your memory, Linux will return the new break point
+	  in %eax . The new break point might actually be larger than what you
+	  asked for, because Linux rounds up to the nearest page. If there is
+	  not enough physical memory or swap to fulfill your request, Linux
+	  will return a zero in %eax . Also, if you call brk with a zero in
+	  %ebx, it will simply return the last usable memory address.
+
+	  The problem with this method is keeping track of the memory we
+	  request. Let’s say I need to move the break to have room to load a
+	  file, and then need to move a break again to load another file. Let’s
+	  say I then get rid of the first file. You now have a giant gap in
+	  memory that’s mapped, but that you aren’t using. If you continue to
+	  move the break in this way for each file you load, you can easily run
+	  out of memory. So, what is needed is a memory manager.
+
+	  A memory manager is a set of routines that takes care of the dirty
+	  work of getting your program memory for you. Most memory managers
+	  have two basic functions - allocate and deallocate. Whenever you need
+	  a certain amount of memory, you can simply tell allocate how much you
+	  need, and it will give you back an address to the memory. When you’re
+	  done with it, you tell deallocate that you are through with it.
+	  allocate will then be able to reuse the memory. This pattern of
+	  memory management is called dynamic memory allocation. This minimizes
+	  the number of "holes" in your memory, making sure that you are making
+	  the best use of it you can. The pool of memory used by memory
+	  managers is commonly referred to as the heap.

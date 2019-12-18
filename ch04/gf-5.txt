@@ -1,0 +1,5 @@
+Can you build a calling convention without using the stack? What limitations might it have?
+	- Yes, I think you can.
+	- If the convention doesn't make use of a stack, it will be very limited in the number of input parameters and local variables it can handle.
+	- The number of local variables and input parameters would be limited to the number of registers available to the machine.
+	- To worsen the matter, at least one register would be taken up by the return address, so the function wouldn't be able to use it!

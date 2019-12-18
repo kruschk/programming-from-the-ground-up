@@ -1,0 +1,21 @@
+Research garbage collection. What advantages and disadvantages does this have
+over the style of memory management used here?
+	- As usual, Wikipedia has a good article on garbage collection (GC):
+		- https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)
+	- Pros:
+		- Automatic memory management means that memory management
+		  requires no attention from the programmer whatsoever.
+		- It eliminates lots of bugs associated with memory
+		  management:
+			- dangling pointer bugs (freeing memory when there are
+			  still pointers to it)
+			- double free bugs (freeing a memory location more
+			  than once)
+			- certain kinds of memory leaks (deleting all
+			  references to an object without freeing the
+			  associated memory so that memory usage bloats)
+	- Cons:
+		- Significant overhead
+		- GC does not in general provide real-time behaviour. That is,
+		  poorly optimized can incur seemingly random pauses in
+		  program execution while GC does its thing.
